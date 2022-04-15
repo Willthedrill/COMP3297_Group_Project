@@ -34,21 +34,20 @@ def list_all_venue_record(request):
     return venue_record
 
 def view_venue_record(request,venue_code):
-    #p=VenueRecord.objects.getall(pk=venue_code)
+    p=VenueRecord.objects.filter(venue_code=venue_code)
     sub=pd.DataFrame(p)
-    sub=sub.loc[sub['venue_code']==venue_code]
-    return 
+    return sub
     
 
 def modify_venue_record():
-    p = VenueRecord.objects.get(pk=venue_code)
+    p = VenueRecord.objects.get(venue_code=venue_code)
     p.location = location
     p.type = type
     p.capacity = capacity
     p.save()
     return
 def delete_venue_record():
-    p = VenueRecord.objects.get(pk=venue_code)
+    p = VenueRecord.objects.get(venue_code=venue_code)
     p.delete()
     return
 
