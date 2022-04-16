@@ -1,25 +1,34 @@
 from models import venue
 from datetime import datetime
 
+
 def create_record(hkuid, venueid, datetime):
-    p = Record(hkuid=hkuid, venueid=venueid, datetime=datetime.now())
+    p = Record(hkuid=hkuid, venueid=venueid, datetime=datetime.strptime(
+        datetime, '%Y-%m-%d %H:%M:%S'))
     p.save()
     return
 
 
 def modify_record(recordid, hkuid, venue, datetime):
-    p = Record.objects.get(pk=recordid)
+    try:
+        p = Record.objects.get(pk=recordid)
+    except:
+        return "We don't have this kind of record!"
     p.hkuid = hkuid
     p.venue = venue
-    p.datetime = datetime
+    p.datetime = datetime.strptime(
+        datetime, '%Y-%m-%d %H:%M:%S')
     p.save()
-    return
+    return "Record updated successfully!"
 
 
 def delete_record(recordid):
-    p = Record.objects.get(pk=recordid)
+    try:
+        p = Record.objects.get(pk=recordid)
+    except:
+        return "We don't have this kind of record!"
     p.delete()
-    return
+    return "Record deleted successfully!"
 
 
 def get_records():
