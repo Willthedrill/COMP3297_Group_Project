@@ -8,12 +8,14 @@ class MemberRecord(models.Model):
     name = models.CharField(max_length = 150)
     def __str__(self):
         return self.UID
+
 class Record(models.Model):
     member = models.ForeignKey(
         MemberRecord, on_delete=models.CASCADE)
     venue = models.ForeignKey(
         VenueRecord, on_delete=models.CASCADE)
     datetime = models.DateTimeField()
+    type = models.CharField(max_length = 10)
 
 class VenueRecord(models.Model):
     venue_code=models.CharField(max_length=20)
