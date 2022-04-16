@@ -9,9 +9,10 @@ class MemberRecord(models.Model):
     def __str__(self):
         return self.UID
 class Record(models.Model):
-    student = models.ForeignKey(
-        Student, on_delete=models.CASCADE)  # to be edited
-    venue = models.CharField(max_length=10)
+    member = models.ForeignKey(
+        MemberRecord, on_delete=models.CASCADE)
+    venue = models.ForeignKey(
+        VenueRecord, on_delete=models.CASCADE)
     datetime = models.DateTimeField()
 
 class VenueRecord(models.Model):
