@@ -6,7 +6,7 @@ def create_record(hkuid, venueid, datetime):
     p = Record(hkuid=hkuid, venueid=venueid, datetime=datetime.strptime(
         datetime, '%Y-%m-%d %H:%M:%S'))
     p.save()
-    return
+    return "Record created successfully!"
 
 
 def modify_record(recordid, hkuid, venue, datetime):
