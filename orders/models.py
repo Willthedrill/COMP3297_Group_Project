@@ -6,8 +6,6 @@ from matplotlib.backend_bases import LocationEvent
 class MemberRecord(models.Model):
     uid = models.CharField(max_length = 10)
     name = models.CharField(max_length = 150)
-    def __str__(self):
-        return self.UID
 
 class Record(models.Model):
     member = models.ForeignKey(
