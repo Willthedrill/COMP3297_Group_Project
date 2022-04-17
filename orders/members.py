@@ -10,7 +10,7 @@ def InsertMember(uid, name):
         if len(name) == 0 or len(name) > 150:
             message = json.dumps({"hkuid":uid, "message":"Error: invalid name length, should be 1 - 150."})
             return message
-        NewMember = MemberRecord(uid = uid, name = name)
+        NewMember = MemberRecord(hkuid = uid, name = name)
         NewMember.save()
         message = json.dumps({"hkuid":uid, "message":"HKU member record created successfully."})
         return message
