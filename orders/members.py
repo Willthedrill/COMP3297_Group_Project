@@ -36,13 +36,13 @@ def SearchMember(key):
         member = MemberRecord.objects.get(hkuid = key)
     except:
         try:
-            member = MemberRecord.get(name = key)
+            member = MemberRecord.objects.get(name = key)
         except:
             message = json.dumps({"key":key, "message":"Error: given HKU ID or name does not match any records."})
             return message
-        message = json.dumps(member)
+        message = json.dumps({"hkuid":member.hkuid,"name":member.name})
         return message
-    message = json.dumps(member)
+    message = json.dumps({"hkuid":member.hkuid,"name":member.name})
     return message
 
 def DeleteMember(uid):
@@ -61,5 +61,8 @@ def ListAllMember():
         message = json.dumps({"message":"Warning: no record available."})
         return message
     else:
-        message = json.dumps(members)
+        message = []
+        for member in members:
+            message.append({"hkuid":member.hkuid, "name":member.name})
+        message = json.dumps(message)
         return message
