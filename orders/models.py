@@ -4,7 +4,7 @@ from matplotlib.backend_bases import LocationEvent
 
 # Create your models here.
 class MemberRecord(models.Model):
-    uid = models.CharField(max_length = 10)
+    hkuid = models.CharField(max_length = 10)
     name = models.CharField(max_length = 150)
 
 class Record(models.Model):
