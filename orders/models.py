@@ -8,10 +8,6 @@ class MemberRecord(models.Model):
     name = models.CharField(max_length = 150)
 
 class Record(models.Model):
-    member = models.ForeignKey(
-        MemberRecord, on_delete=models.CASCADE)
-    venue = models.ForeignKey(
-        VenueRecord, on_delete=models.CASCADE)
     hkuid = models.CharField(max_length=10)
     venue = models.CharField(max_length=20)
     datetime = models.DateTimeField()
