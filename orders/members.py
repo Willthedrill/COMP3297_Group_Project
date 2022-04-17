@@ -2,7 +2,7 @@ from .models import MemberRecord
 import json
 def InsertMember(uid, name):
     try:
-        NewMember = MemberRecord.get(hkuid = uid)
+        NewMember = MemberRecord.objects.get(hkuid = uid)
     except:
         if len(uid) != 10 or not uid.isnumeric():
             message = json.dump({"hkuid":uid, "message":"Error: invalid HKU ID format, should be 10 numbers."})
@@ -19,7 +19,7 @@ def InsertMember(uid, name):
 
 def UpdateMember(uid, name):
     try:
-        member = MemberRecord.get(hkuid = uid)
+        member = MemberRecord.objects.get(hkuid = uid)
     except:
         message = json.dump({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
         return message
@@ -33,7 +33,7 @@ def UpdateMember(uid, name):
 
 def SearchMember(key):
     try:
-        member = MemberRecord.get(hkuid = key)
+        member = MemberRecord.objects.get(hkuid = key)
     except:
         try:
             member = MemberRecord.get(name = key)
@@ -47,7 +47,7 @@ def SearchMember(key):
 
 def DeleteMember(uid):
     try:
-        member = MemberRecord.get(hkuid = uid)
+        member = MemberRecord.objects.get(hkuid = uid)
     except:
         message = json.dump({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
         return message
