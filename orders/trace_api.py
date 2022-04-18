@@ -21,10 +21,12 @@ def get_close_contact(request):
     result=[]
     subject=[]
     history=Record.objects.filter(hkuid=uid, type='en')
+    history= json.dump(history)
     for list in history:
-        datetime1= list.datetime
-        t=datetime.strptime(datetime1, '%Y-%m-%d %H:%M:%S')
-        if (t.getDate()== date.getDate() or t.getDate()== beforeone.getDate() or t.getDate()== beforetwo.getDate()):
+        date1= list['datetime']
+        t=datetime.strptime(date1, '%Y-%m-%d %H:%M:%S')
+        #date_= t['date']
+        if (t.date()== date['date'] or t.date()== beforeone.date() or t.date()== beforetwo.date()):
             result_venue.append(list['venue'])
         #result_venue= venues the infected person went to in the last two days
         for venue in result_venue:
