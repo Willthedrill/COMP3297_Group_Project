@@ -21,10 +21,7 @@ def get_close_contact(request):
     result=[]
     subject=[]
     history=Record.objects.filter(hkuid=uid, type='en')
-   # history=json.loads(filter)
-    print(history)
     for list in history:
-        print(list)
         datetime1= list.datetime
         t=datetime.strptime(datetime1, '%Y-%m-%d %H:%M:%S')
         if (t.getDate()== date.getDate() or t.getDate()== beforeone.getDate() or t.getDate()== beforetwo.getDate()):
