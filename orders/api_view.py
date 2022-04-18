@@ -19,14 +19,14 @@ def index(request):
     elif query['type']=='modify':
         list = query['content']
         for i in list:
-            modify_record(i['recordid'],i['hkuid'], i['venue'], i['datetime'])
-            return {"state": "success", "cmd": "modify", "hkuid": i['hkuid'], "recordid": i["recordid"], "venue": i['venue'],
-                    "datetime": i['datetime']}
+            modify_record(i['recordid'],i['hkuid'], i['venue'], i['datetime'],i['type'])
+            return Response({"state": "success", "cmd": "modify", "hkuid": i['hkuid'], "recordid": i["recordid"], "venue": i['venue'],
+                    "datetime": i['datetime']})
     elif query['type'] == 'delete':
         list = query['content']
         for i in list:
-            DeleteMember(i['hkuid'])
-            return Response({"i":i['hkuid']})
-            #delete_record(i['recordid'])
-            #return {"state": "success", "cmd": "delete","recordid": i["recordid"]}
+            #DeleteMember(i['hkuid'])
+            #return Response({"i":i['hkuid']})
+            delete_record(i['recordid'])
+            return Response({"state": "success", "cmd": "delete","recordid": i["recordid"]})
     return {"state":"fail"}
