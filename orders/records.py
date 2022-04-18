@@ -9,6 +9,8 @@ def create_record(hkuid, venueid, datetime, type):
         p = Record(hkuid=hkuid, venueid=venueid, datetime=datetime, type=type)
     except:
         return "Error in creating the record"
+    if datetime > datetime.now() or datetime < "2022-1-1 00:00":
+        return "Error: invalid datetime"
     p.save()
     return p.pk
 
@@ -18,6 +20,8 @@ def modify_record(recordid, hkuid, venue, datetime, type):
         p = Record.objects.get(pk=recordid)
     except:
         return "Error: No such record ID!"
+    if datetime > datetime.now() or datetime < "2022-1-1 00:00":
+        return "Error: invalid datetime"
     p.hkuid = hkuid
     p.venue = venue
     p.datetime = datetime
