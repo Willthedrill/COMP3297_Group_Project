@@ -12,6 +12,7 @@ def get_close_contact(request):
     str1=request.data
     str1=json.dumps(str1)
     query=json.loads(str1)
+#    list=query['content']
     uid= query['hkuid']
     d= query['datetime']
     date= datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
@@ -50,4 +51,3 @@ def get_close_contact(request):
         return Response({"No close contacts available"})
     else:    
         return Response(message)
-      
