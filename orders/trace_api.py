@@ -12,7 +12,6 @@ def get_close_contact(request):
     str1=request.data
     str1=json.dumps(str1)
     query=json.loads(str1)
-#    list=query['content']
     uid= query['hkuid']
     d= query['datetime']
     date= datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
@@ -21,7 +20,6 @@ def get_close_contact(request):
     beforeone_day= beforeone.strftime("%Y-%m-%d")
     beforetwo= datetime.strptime(d, '%Y-%m-%d %H:%M:%S')- timedelta(days=2)
     beforetwo_day= beforetwo.strftime("%Y-%m-%d")
-    result=[]
     result_venue=[]
     message={}
     subject={"hkuid":uid,"datetime":date}
