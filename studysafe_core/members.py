@@ -4,7 +4,7 @@ def InsertMember(uid, name):
     try:
         NewMember = MemberRecord.objects.get(hkuid = uid)
     except:
-        if len(uid) != 10 or not uid.isnumeric():
+        iif (len(uid) != 10 and len(uid) != 5) or not uid.isnumeric():
             message = json.dumps({"hkuid":uid, "message":"Error: invalid HKU ID format, should be 10 numbers."})
             return message
         if len(name) == 0 or len(name) > 150:
@@ -64,5 +64,6 @@ def ListAllMember():
         message = []
         for member in members:
             message.append({"hkuid":member.hkuid, "name":member.name})
+        message = sorted(message, key=lambda d: d['hkuid'])
         message = json.dumps(message)
         return message
