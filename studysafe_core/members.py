@@ -1,26 +1,30 @@
 from .models import MemberRecord
 import json
-def InsertMember(uid, name):
+def InsertMember(hkuid, name):
     try:
+        uid=hkuid
         NewMember = MemberRecord.objects.get(hkuid = uid)
     except:
+        uid=hkuid
         if (len(uid) != 10 and len(uid) != 5) or not uid.isnumeric():
             message = json.dumps({"hkuid":uid, "message":"Error: invalid HKU ID format, should be 10 numbers."})
             return message
         if len(name) == 0 or len(name) > 150:
             message = json.dumps({"hkuid":uid, "message":"Error: invalid name length, should be 1 - 150."})
-            return message
+            return True,message
         NewMember = MemberRecord(hkuid = uid, name = name)
         NewMember.save()
         message = json.dumps({"hkuid":uid, "message":"HKU member record created successfully."})
-        return message
+        return True,message
     message = json.dumps({"hkuid":uid, "message":"Error: record with such HKU ID already exists."})
-    return message
+    return False,message
 
-def UpdateMember(uid, name):
+def UpdateMember(hkuid, name):
     try:
+        uid=hkuid
         member = MemberRecord.objects.get(hkuid = uid)
     except:
+        uid=hkuid
         message = json.dumps({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
         return message
     if len(name) == 0 or len(name) > 150:
