@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}StudySafe Trace - Venues{% endblock %}
+
+{% block csstheme %}
+  <style>
+    :root {
+      --header-bg-color: lime;
+      --header-border-color: limegreen;
+      --block-bg-color: lightgreen;
+      --block-border-color: limegreen;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}
+  <header>
+    <h1>VENUES</h1>
+  </header>
+{% endblock %}
+
+{% block details %}
+    <div class="block">
+      <div class="label">Venues visited during infectious period:</div>
+      <div class="data">
+        <ul>
+          {% for venue in venues %}
+            <li>{{ venue }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}StudySafe Trace - Contacts{% endblock %}
+
+{% block csstheme %}
+  <style>
+    :root {
+      --header-bg-color: lightblue;
+      --header-border-color: turquoise;
+      --block-bg-color: paleturquoise;
+      --block-border-color: turquoise;
+    }
+  </style>
+{% endblock %}
+
+{% block customcss %}
+  <style>
+    .main-content {
+      padding: 1em;
+      width: 100%;
+      max-width: 30em;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+    .info {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: stretch;
+    }
+    .info .block {
+      flex-basis: 50%;
+    }
+  </style>
+{% endblock %}
+
+
+{% block header %}
+  <header>
+    <h1>CONTACTS</h1>
+  </header>
+{% endblock %}
+
+{% block details %}
+    <div class="block">
+      <div class="label">Close contacts during infectious period:</div>
+      <div class="data">
+        <ul>
+          {% for contact in contacts %}
+            <li>{{ contact }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+{% endblock %}

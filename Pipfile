@@ -12,6 +12,9 @@ djangorestframework = "*"
 pandas = "*"
 numpy = "*"
 grpcio = "*"
+ipython = "*"
+django-extensions = "*"
+notebook = "*"
 
 [dev-packages]
 

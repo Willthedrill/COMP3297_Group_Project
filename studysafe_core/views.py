@@ -61,7 +61,7 @@ def modify_venue_record(request,venue_code,location,type,capacity):
     p.save()
     return Response(Status=200)
 
-
+@api_view(['GET','POST'])
 def delete_venue_record(request,venue_code):
     p = VenueRecord.objects.get(venue_code=venue_code)
 

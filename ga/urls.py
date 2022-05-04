@@ -20,4 +20,5 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('studysafe_core/',include('studysafe_core.urls')),
+    path('studysafe_trace/',include('studysafe_trace.urls'))
 ]

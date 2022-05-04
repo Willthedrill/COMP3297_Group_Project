@@ -44,7 +44,7 @@ def index(request):
         import pandas as pd
         pd.DataFrame(response.json())
         '''
-        all_record=view_all_records()
+        all_record=view_all_records(request)
         return Response(all_record)
 
 
