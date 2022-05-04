@@ -10,6 +10,7 @@ requests = "*"
 environs = {extras = ["django"], version = "*"}
 djangorestframework = "*"
 pandas = "*"
+numpy = "*"
 
 [dev-packages]
 
