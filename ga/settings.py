@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["shielded-tor-28383.herokuapp.com","localhost","127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    'studysafe_trace.apps.StudysafeTraceConfig',
     'studysafe_core.apps.StudysafeCoreConfig',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,8 +1,9 @@
 
+from django.http import HttpResponse
 from .models import Record
 
 
-def create_record(hkuid, venue_code, datetime, type):
+def create_record(request,hkuid, venue_code, datetime, type):
     status=True
     try:
         p = Record(hkuid_id=hkuid, venue_code_id=venue_code, datetime=datetime, type=type)
@@ -14,7 +15,7 @@ def create_record(hkuid, venue_code, datetime, type):
     return status,message,p
 
 
-def modify_record(recordid, hkuid, venue_code, datetime, type):
+def modify_record(request,recordid, hkuid, venue_code, datetime, type):
     status=True
     try:
         p = Record.objects.get(pk=recordid)
@@ -30,7 +31,7 @@ def modify_record(recordid, hkuid, venue_code, datetime, type):
     return status,message,p
 
 
-def delete_record(recordid):
+def delete_record(request,recordid):
     status=True
     try:
         p = Record.objects.get(pk=recordid)
@@ -42,10 +43,10 @@ def delete_record(recordid):
     return status,message
 
 
-def view_all_records():
-    import pandas as pd
-    records = pd.DataFrame(Record.objects.all().values())
+def view_all_records(request):
+    records = Record.objects.all().values()
     if len(records) == 0:
-        return "Warning: no record available"
+        records="Warning: no record available"
+        return HttpResponse(content=records)
     else:
-        return records
+        return HttpResponse(records)
