@@ -15,7 +15,6 @@ class MemberRecord(models.Model):
         return f'{self.hkuid},{self.name}'
 
 
-
 class VenueRecord(models.Model):
     '''
     Record the Venues avaialble in the campus with venue_code, location, type and capacity. 

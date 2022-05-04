@@ -1,4 +1,4 @@
-
+from rest_framework.decorators import api_view
 from grpc import Status
 from .models import VenueRecord
 from .serializers import *
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-
+@api_view(['GET'])       
 def create_venue_record(request,venue_code,location,type,capacity):
     #error mechanism
     '''
@@ -38,19 +38,21 @@ def create_venue_record(request,venue_code,location,type,capacity):
         return Response(error_message)
     # except:
     #     return HttpResponse(error_message)
-        
+@api_view(['GET'])
 def list_all_venue_record(request):
     venue_record=VenueRecord.objects.all()
-    venue_record_serializer=VenueRecordSerializer(venue_record,manay=True)
+    venue_record_serializer=VenueRecordSerializer(venue_record,many=True)
     return Response(venue_record_serializer.data)
-
+@api_view(['GET'])
 def view_venue_record(request,venue_code):
-    p=VenueRecord.objects.filter(venue_code=venue_code)
-    if len(p)==0:
+    venue_record=VenueRecord.objects.filter(venue_code=venue_code)
+    venue_record_serialized=VenueRecordSerializer(venue_record,many=True)
+    if len(venue_record)==0:
         p='No existing record for '+str(venue_code)
-    return Response(p)
+        return Response(p)
+    return Response(venue_record_serialized.data)
     
-
+@api_view(['GET','POST'])
 def modify_venue_record(request,venue_code,location,type,capacity):
     p = VenueRecord.objects.get(venue_code=venue_code)
     p.location = location

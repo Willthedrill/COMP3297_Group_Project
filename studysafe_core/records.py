@@ -1,9 +1,10 @@
-
+from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from .models import Record
 from .serializers import *
 from rest_framework.response import Response
-import json
+
+@api_view(['GET','POST'])
 def create_record(request,hkuid, venue_code, datetime, type):
     status=True
     try:
@@ -15,7 +16,7 @@ def create_record(request,hkuid, venue_code, datetime, type):
         message="Error in creating the record with error "+str(e)
     return status,message,p
 
-
+@api_view(['GET','POST'])
 def modify_record(request,recordid, hkuid, venue_code, datetime, type):
     status=True
     try:
@@ -31,7 +32,7 @@ def modify_record(request,recordid, hkuid, venue_code, datetime, type):
     p.save()
     return status,message,p
 
-
+@api_view(['GET','POST'])
 def delete_record(request,recordid):
     status=True
     try:
@@ -43,12 +44,12 @@ def delete_record(request,recordid):
         message="Error: No such record ID! Exact Error Message: "+str(e)
     return status,message
 
-
+@api_view(['GET'])
 def view_all_records(request):
     records = Record.objects.all().values()
-    records_serialized=RecordSerializer(records,manay=True)
+    records_serialized=RecordSerializer(records,many=True)
     if len(records) == 0:
         records="Warning: no record available"
-        return Response(records_serialized)
+        return Response(records_serialized.data)
     else:
-        return Response(records_serialized)
+        return Response(records_serialized.data)
