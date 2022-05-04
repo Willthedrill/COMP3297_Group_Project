@@ -1,7 +1,9 @@
 
+from grpc import Status
 from .models import VenueRecord
-
+from .serializers import *
 from django.http import HttpResponse
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -31,21 +33,22 @@ def create_venue_record(request,venue_code,location,type,capacity):
         print(type(capacity))
         p=VenueRecord(venue_code=venue_code,location=location,type=type,capacity=capacity)
         p.save()
-        return HttpResponse(success_message)
+        return Response(success_message)
     else:
-        return HttpResponse(error_message)
+        return Response(error_message)
     # except:
     #     return HttpResponse(error_message)
         
 def list_all_venue_record(request):
     venue_record=VenueRecord.objects.all()
-    return HttpResponse(venue_record)
+    venue_record_serializer=VenueRecordSerializer(venue_record,manay=True)
+    return Response(venue_record_serializer.data)
 
 def view_venue_record(request,venue_code):
     p=VenueRecord.objects.filter(venue_code=venue_code)
     if len(p)==0:
         p='No existing record for '+str(venue_code)
-    return HttpResponse(p)
+    return Response(p)
     
 
 def modify_venue_record(request,venue_code,location,type,capacity):
@@ -54,8 +57,11 @@ def modify_venue_record(request,venue_code,location,type,capacity):
     p.type = type
     p.capacity = capacity
     p.save()
-    return
+    return Response(Status=200)
+
+
 def delete_venue_record(request,venue_code):
     p = VenueRecord.objects.get(venue_code=venue_code)
+
     p.delete()
-    return
+    return Response(Status=200)

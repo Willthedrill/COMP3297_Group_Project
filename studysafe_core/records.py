@@ -1,8 +1,9 @@
 
 from django.http import HttpResponse
 from .models import Record
-
-
+from .serializers import *
+from rest_framework.response import Response
+import json
 def create_record(request,hkuid, venue_code, datetime, type):
     status=True
     try:
@@ -45,8 +46,9 @@ def delete_record(request,recordid):
 
 def view_all_records(request):
     records = Record.objects.all().values()
+    records_serialized=RecordSerializer(records,manay=True)
     if len(records) == 0:
         records="Warning: no record available"
-        return HttpResponse(content=records)
+        return Response(records_serialized)
     else:
-        return HttpResponse(records)
+        return Response(records_serialized)
