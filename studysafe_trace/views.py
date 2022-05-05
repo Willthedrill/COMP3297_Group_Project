@@ -2,11 +2,11 @@ from matplotlib.style import context
 from rest_framework.decorators import api_view
 # import sys
 # sys.append('../studysafe_core')
-from grpc import Status
 from studysafe_core.models import *
 from studysafe_core.serializers import *
 from rest_framework.response import Response
-from django.views.generic import TemplateView 
+from django.views.generic import TemplateView
+
 class trace_venue(TemplateView):
     template_name = "venues.html"
     def get_context_data(self, **kwargs):
