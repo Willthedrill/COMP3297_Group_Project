@@ -26,14 +26,14 @@ def UpdateMember(hkuid, name):
     except:
         uid=hkuid
         message = json.dumps({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
-        return message
+        return False,message
     if len(name) == 0 or len(name) > 150:
         message = json.dumps({"hkuid":uid, "message":"Error: invalid name length, should be 1 - 150."})
-        return message
+        return False,message
     member.name = name
     member.save()
     message = json.dumps({"hkuid":uid, "message":"HKU member record updated successfully."})
-    return message
+    return True,message
 
 def SearchMember(key):
     try:
@@ -43,31 +43,31 @@ def SearchMember(key):
             member = MemberRecord.objects.get(name = key)
         except:
             message = json.dumps({"key":key, "message":"Error: given HKU ID or name does not match any records."})
-            return message
+            return False,message
         message = json.dumps({"hkuid":member.hkuid,"name":member.name})
-        return message
+        return True,message
     message = json.dumps({"hkuid":member.hkuid,"name":member.name})
-    return message
+    return True,message
 
 def DeleteMember(uid):
     try:
         member = MemberRecord.objects.get(hkuid = uid)
     except:
         message = json.dumps({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
-        return message
+        return False,message
     member.delete()
     message = json.dumps({"hkuid":uid, "message":"HKU member record deleted successfully."})
-    return message
+    return True,message
 
 def ListAllMember():
     members = MemberRecord.objects.all()
     if len(members) == 0:
         message = json.dumps({"message":"Warning: no record available."})
-        return message
+        return False,message
     else:
         message = []
         for member in members:
             message.append({"hkuid":member.hkuid, "name":member.name})
         message = sorted(message, key=lambda d: d['hkuid'])
         message = json.dumps(message)
-        return message
+        return True,message
