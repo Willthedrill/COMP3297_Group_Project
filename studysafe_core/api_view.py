@@ -20,6 +20,7 @@ def index(request):
     str1 = json.dumps(str1)
     query = json.loads(str1)
     response_list=[]
+    #modifications on records
     if query['type']=='create':
         list_1=query['content']
         for i in list_1:
@@ -48,6 +49,8 @@ def index(request):
         status,message,all_record=view_all_records()
         response_list.append({'state':check(status,message),'cmd':'list_all','data':all_record})
         return Response(response_list)
+
+    #manipulating venue record
     elif query['type']=='create_venue':
         list_1 = query['content']
         for i in list_1:
@@ -77,10 +80,41 @@ def index(request):
             status,message=delete_venue_record(**i)
             response_list.append({'state':check(status,message)})
         return Response(response_list) 
-    elif query['type']=='create_students':
+
+    #manipulating student records
+    elif query['type']=='create_student':
         list_1 = query['content']
         for i in list_1:
             status,message=InsertMember(**i)
             response_list.append({'state':check(status,message)})
         return Response(response_list) 
+    
+    elif query['type']=='delete_student':
+        list_1 = query['content']
+        for i in list_1:
+            status,message=DeleteMember(**i)
+            response_list.append({'state':check(status,message)})
+        return Response(response_list) 
+
+    elif query['type']=='list_all_students':
+        status,message,all_record=ListAllMember()
+        response_list.append({'state':check(status,message),'cmd':'list_all','data':all_record})
+        return Response(response_list)
+
+    elif query['type']=='search_student':
+        #fields required: hkuid, name
+        list_1 = query['content']
+        for i in list_1:
+            status,message,all_record=SearchMember(**i)
+            response_list.append({'state':check(status,message),'cmd':'search_student','data':all_record})
+        return Response(response_list)
+    elif query['type']=='update_student':
+        list_1 = query['content']
+        for i in list_1:
+            status,message=UpdateMember(**i)
+            response_list.append({'state':check(status,message)})
+        return Response(response_list) 
+
+
+    
     return Response({"state":"failed, please recheck whether your commmand is correct or not"})
