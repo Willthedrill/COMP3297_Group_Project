@@ -26,4 +26,11 @@ class trace_venue(TemplateView):
         context['venues']=list(venue_record['venue_code_id'].drop_duplicates().sort_values())
         return context
 
-
+from django.shortcuts import render
+from functions import api
+from functions import handle
+def contacts(request,hkuid,datetime):
+    #return HttpResponse("hello world")
+    context=api.getdata(hkuid=hkuid,datetime=datetime)
+    context2=handle.handledata(context)
+    return render(request, 'contacts.html', context=context2)
