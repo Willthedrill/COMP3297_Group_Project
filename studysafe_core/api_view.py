@@ -71,7 +71,7 @@ def index(request):
     elif query['type']=='modify_venue':
         list_1 = query['content']
         for i in list_1:
-            status,message=view_venue_record(**i)
+            status,message=modify_venue_record(**i)
             response_list.append({'state':check(status,message)})
         return Response(response_list)
     elif query['type']=='delete_venue':

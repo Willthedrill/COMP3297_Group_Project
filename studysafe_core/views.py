@@ -66,11 +66,18 @@ def view_venue_record(venue_code):
 def modify_venue_record(venue_code,location,type,capacity):
     try:
         p = VenueRecord.objects.get(venue_code=venue_code)
-        p.location = location
-        p.type = type
-        p.capacity = capacity
+        update_param={'venue_code':venue_code}
+        if location!='':
+            p.location = location
+            update_param.update({'location':location})
+        if type!='':
+            p.type = type
+            update_param.update({'type':type})
+        if capacity!='':
+            p.capacity = capacity
+            update_param.update({'capacity':capacity})
         p.save()
-        message='Successfully modified venue '+venue_code+'//'+location+'//'+type+'//'+str(capacity)
+        message='Successfully modified venue with parameters '+str(update_param)
         return True,message
     except Exception as e:
         return False,str(e)
