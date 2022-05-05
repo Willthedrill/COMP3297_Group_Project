@@ -12,6 +12,8 @@ def create_venue_record(venue_code,location,type,capacity):
     #error mechanism
     '''
     venue record should be a dictionary containing code, location, type, capacity
+
+    input constraints
     '''
     try:
         status=True
@@ -42,7 +44,7 @@ def create_venue_record(venue_code,location,type,capacity):
 def list_all_venue_record():
     try:
         status=True
-        venue_record=VenueRecord.objects.all()
+        venue_record=VenueRecord.objects.all().order_by('venue_code')
         venue_record_serializer=VenueRecordSerializer(venue_record,many=True)
         message='success'
         return status,message,venue_record_serializer.data

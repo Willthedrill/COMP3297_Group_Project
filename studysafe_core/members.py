@@ -1,5 +1,6 @@
 from .models import MemberRecord
 import json
+from .serializers import *
 def InsertMember(hkuid, name):
     try:
         uid=hkuid
@@ -23,9 +24,9 @@ def UpdateMember(hkuid, name):
     try:
         uid=hkuid
         member = MemberRecord.objects.get(hkuid = uid)
-    except:
+    except Exception as e:
         uid=hkuid
-        message = json.dumps({"hkuid":uid, "message":"Error: given HKU ID does not match any records."})
+        message = json.dumps({"hkuid":uid, "message":"Error: given HKU ID does not match any records.","keyerror":str(e)})
         return False,message
     if len(name) == 0 or len(name) > 150:
         message = json.dumps({"hkuid":uid, "message":"Error: invalid name length, should be 1 - 150."})
@@ -35,21 +36,25 @@ def UpdateMember(hkuid, name):
     message = json.dumps({"hkuid":uid, "message":"HKU member record updated successfully."})
     return True,message
 
-def SearchMember(key):
+def SearchMember(hkuid):
+    key=hkuid
     try:
         member = MemberRecord.objects.get(hkuid = key)
+        members_serializer=MemberRecordSerializer(member)
     except:
         try:
             member = MemberRecord.objects.get(name = key)
-        except:
-            message = json.dumps({"key":key, "message":"Error: given HKU ID or name does not match any records."})
-            return False,message
+            members_serializer=MemberRecordSerializer(member,many=True)
+        except Exception as e:
+            message = json.dumps({"key_error":str(e), "message":"Error: given HKU ID or name does not match any records."})
+            return False,message,0
         message = json.dumps({"hkuid":member.hkuid,"name":member.name})
-        return True,message
+        return False,message,0
     message = json.dumps({"hkuid":member.hkuid,"name":member.name})
-    return True,message
+    return True,message,members_serializer.data
 
-def DeleteMember(uid):
+def DeleteMember(hkuid):
+    uid=hkuid
     try:
         member = MemberRecord.objects.get(hkuid = uid)
     except:
@@ -60,14 +65,15 @@ def DeleteMember(uid):
     return True,message
 
 def ListAllMember():
-    members = MemberRecord.objects.all()
+    members = MemberRecord.objects.all().order_by('hkuid')
+    members_serializer=MemberRecordSerializer(members,many=True)
     if len(members) == 0:
         message = json.dumps({"message":"Warning: no record available."})
-        return False,message
+        return False,message,0
     else:
         message = []
         for member in members:
             message.append({"hkuid":member.hkuid, "name":member.name})
         message = sorted(message, key=lambda d: d['hkuid'])
         message = json.dumps(message)
-        return True,message
+        return True,message,members_serializer.data
