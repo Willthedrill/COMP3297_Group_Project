@@ -1,0 +1,47 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /studysafe_core/api_device:
+    post:
+      operationId: createindex
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - studysafe-core
+  /studysafe_core/api_trace:
+    post:
+      operationId: createget_close_contact
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - studysafe-core
